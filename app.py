@@ -15,5 +15,8 @@ def webhook():
     
     return jsonify(json.loads(response['body'])), response['statusCode']
 
+@app.route('/', methods=['GET'])
+def home():
+    return "Email API is running!", 200
 if __name__ == "__main__":
     app.run(port=5001) 
