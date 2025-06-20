@@ -1,0 +1,28 @@
+service: email-api-render
+
+provider:
+  name: aws # This is for local simulation only
+  runtime: python3.9
+  environment:
+    # These are mapped from your .env file
+    SENDER_EMAIL: ${env:SENDER_EMAIL}
+    SENDER_PASSWORD: ${env:SENDER_PASSWORD}
+
+functions:
+  sendEmail:
+    handler: handler.send_email
+    events:
+      - http:
+          path: send-email
+          method: post
+          cors: true
+
+plugins:
+  - serverless-python-requirements
+  - serverless-offline
+
+custom:
+  pythonRequirements:
+    dockerizePip: non-linux # Use this on Windows/macOS
+  serverless-offline:
+    httpPort: 3000
